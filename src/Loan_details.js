@@ -1,24 +1,32 @@
-import {useState} from "react";
-
-import { v4 as uuidv4 } from 'uuid';
-
+import {createElement, useState} from "react";
 
 function Loan_details() {
 
+  // Manage States
+
+let [loandetail,setLoandetail]= useState([{Date:"Oct 2024",Month:"35",Interest:"83.33",Monthlytotal:"212.47", Principalbalance:"9870.86"}]);
 
 let [totalInterest,setTotalInterest]=useState("");
+
 let [amount,setAmount]=useState("");
+
 let [rate,setRate]=useState("");
+
 let [term,setTerm]=useState("");
+
 let [date,setDate]=useState("");
+
+// handle input change
 
 let handleInputChange=(e)=>{
 
    if(e.target.name=="Amount"){
      setAmount(e.target.value);
+   
    }
    if(e.target.name=="Rate"){
     setRate(e.target.value);
+    
   }
   if(e.target.name=="Term"){
     setTerm(e.target.value);
@@ -26,14 +34,32 @@ let handleInputChange=(e)=>{
   if(e.target.name=="Date"){
     setDate(e.target.value);
   }
+  
  
 }
 
 let handlSubmit=()=>{
+  
   setTotalInterest(()=>{
-    return (amount*rate*term/12)/100;
-  });
 
+    return (amount*rate*term/12)/100;
+  })
+
+    const Date=date;
+    const Interest=totalInterest
+    const Principalbalance=amount;
+    const Month=term;
+    const Monthlytotal=Interest/Month*12;
+
+   const new_details={
+      Date,
+      Interest,
+      Principalbalance,
+      Month,
+      Monthlytotal
+   }
+
+   setLoandetail((prevValue)=>prevValue.concat(new_details));
 
 }
 
@@ -41,7 +67,10 @@ let handlSubmit=()=>{
 
   return (
     <div className="container m-5 "style={{paddingLeft:"10%"}}>
-     <div className="p-5" style={{backgroundColor:"#fbe2aa",marginLeft:"30%", width:"45%"}}>
+
+     {/* FIRST container to give a inputs*/}
+
+     <div className="p-5 mb-5" style={{backgroundColor:"#fbe2aa",marginLeft:"30%", width:"45%"}}>
        <h1>Loan detail </h1>
        <p>
        <label htmlFor="Amount">Loan amount</label><br/>
@@ -64,25 +93,37 @@ let handlSubmit=()=>{
        </p>
 
        <p>
-        <h7><b>ADD ORIGINATION FEE <button onClick={handlSubmit}>🠻add {totalInterest}</button></b> </h7>
+        <h7><b>ADD ORIGINATION FEE <button onClick={handlSubmit}>🠻add </button></b> </h7>
        </p>
      </div>
+
+     {/* Second container to creat tables item */}
+
      <div style={{border:"2px solid black"}}>
      <div className="row p-5 border-bottom" >
+             
+           {/* currant value */}
+
             <h1 className="p-5">Your Loan Estimate</h1>
+       
                <div className="col-5">
                  <h1>Monthly payments</h1>
                  <h1><b>${totalInterest/term*12}</b></h1>
                </div>
+
                <div className="col-7 p-5 mt-2">
                   <p>Total principal &nbsp;&nbsp;&nbsp;&nbsp; ${amount}</p><hr/>
                   <p>Total Interest payment &nbsp;&nbsp;&nbsp;&nbsp; ${totalInterest}</p><hr/>
                   <p>Total loan payments ?  &nbsp;&nbsp;&nbsp;&nbsp; ${amount+totalInterest}</p><hr/>
-                  <p>Payoff date &nbsp;&nbsp;&nbsp;&nbsp; ${date}+{term}months</p><hr/>
+                  <p>Payoff date &nbsp;&nbsp;&nbsp;&nbsp; {date}+{term}&nbsp; months</p><hr/>
                </div>
             </div>
+
             <div className="border-top p-5">
                 <h1>Hide amortization schedule</h1>
+
+              {/* add value in table */}
+
                 <div className="text-center overflow-auto"> 
                   <table>
                     <thead className="border-bottom">
@@ -94,15 +135,6 @@ let handlSubmit=()=>{
                     </thead>
                     
                    <tbody> 
-                    <tr className="border-bottom">
-
-                    <td className="p-3">Oct 2024</td>
-                    <td className="p-3">35</td>
-                    <td className="p-3">$83.33</td>
-                    <td className="p-3">$212.47</td>
-                    <td className="p-3">$9870.86</td>
-
-                    </tr>
 
                     <tr className="border-bottom">
 
@@ -123,20 +155,19 @@ let handlSubmit=()=>{
                     <td className="p-3">$9476.96</td>
 
                     </tr>
-                   
-                      
-                  
-                           <tr className="border-bottom" >
-                              <td className="p-3">{date}</td>
-                              <td className="p-3">{term}</td>
-                              <td className="p-3">${totalInterest}</td>
-                              <td className="p-3">${totalInterest/term*12}</td>
-                              <td className="p-3">${amount}</td>
-                        </tr>
-                      
-                    
-                    
-                    
+                   {/* dynamic values add */}
+                    {
+                      loandetail.map((value)=>{
+                       return <tr className="border-bottom" >
+                          <td className="p-3">{value.Date}</td>
+                          <td className="p-3">{value.Month}</td>
+                          <td className="p-3">${value.Monthlytotal}</td>
+                          <td className="p-3">${value.Interest}</td>
+                          <td className="p-3">${value.Principalbalance}</td>
+                       </tr>
+                      }
+                    )
+                    }
 
                     </tbody>
                   </table>
