@@ -179,6 +179,6 @@ let handlSubmit=()=>{
    
     
   );
-}
+} 
 
 export default  Loan_details;
