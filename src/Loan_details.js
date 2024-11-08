@@ -4,7 +4,7 @@ function Loan_details() {
 
   // Manage States
 
-let [loandetail,setLoandetail]= useState([{Date:"Oct 2024",Month:"35",Interest:"83.33",Monthlytotal:"212.47", Principalbalance:"9870.86"}]);
+let [loandetail,setLoandetail]= useState([{Date:"Oct 2024",Month:"129.14",Interest:"83.33",Monthlytotal:"212.47", Principalbalance:"9870.86"}]);
 
 let [totalInterest,setTotalInterest]=useState("");
 
@@ -46,10 +46,10 @@ let handlSubmit=()=>{
   })
 
     const Date=date;
-    const Interest=totalInterest
-    const Principalbalance=amount;
-    const Month=term;
-    const Monthlytotal=Interest/Month*12;
+    const Principalbalance=212.47*term;
+    const Interest=(212.47*term-amount)/term;
+    const Month=(212.47-Interest);
+    const Monthlytotal=212.47;
 
    const new_details={
       Date,
@@ -113,8 +113,8 @@ let handlSubmit=()=>{
 
                <div className="col-7 p-5 mt-2">
                   <p>Total principal &nbsp;&nbsp;&nbsp;&nbsp; ${amount}</p><hr/>
-                  <p>Total Interest payment &nbsp;&nbsp;&nbsp;&nbsp; ${totalInterest}</p><hr/>
-                  <p>Total loan payments ?  &nbsp;&nbsp;&nbsp;&nbsp; ${amount+totalInterest}</p><hr/>
+                  <p>Total Interest payment &nbsp;&nbsp;&nbsp;&nbsp; ${(212.47*term)-amount}</p><hr/>
+                  <p>Total loan payments ?  &nbsp;&nbsp;&nbsp;&nbsp; ${212.47*term}</p><hr/>
                   <p>Payoff date &nbsp;&nbsp;&nbsp;&nbsp; {date}+{term}&nbsp; months</p><hr/>
                </div>
             </div>
@@ -128,7 +128,7 @@ let handlSubmit=()=>{
                   <table>
                     <thead className="border-bottom">
                       <th className="p-5">Payment date</th>
-                      <th className="p-5">Month</th>
+                      <th className="p-5">Principal</th>
                       <th className="p-5">Interest</th>
                       <th className="p-5">Monthly total</th>
                       <th className="p-5">Principal balance</th>
@@ -139,7 +139,7 @@ let handlSubmit=()=>{
                     <tr className="border-bottom">
 
                     <td className="p-3">Nov 2024</td>
-                    <td className="p-3">55</td>
+                    <td className="p-3">$132.1</td>
                     <td className="p-3">$82.26</td>
                     <td className="p-3">$212.47</td>
                     <td className="p-3">$9740.65</td>
@@ -149,7 +149,7 @@ let handlSubmit=()=>{
                     <tr className="border-bottom">
 
                     <td className="p-3">Jan 2025</td>
-                    <td className="p-3">50</td>
+                    <td className="p-3">$132.39</td>
                     <td className="p-3">$80.08</td>
                     <td className="p-3">$212.47</td>
                     <td className="p-3">$9476.96</td>
@@ -160,9 +160,9 @@ let handlSubmit=()=>{
                       loandetail.map((value)=>{
                        return <tr className="border-bottom" >
                           <td className="p-3">{value.Date}</td>
-                          <td className="p-3">{value.Month}</td>
-                          <td className="p-3">${value.Monthlytotal}</td>
+                          <td className="p-3">${value.Month}</td> 
                           <td className="p-3">${value.Interest}</td>
+                          <td className="p-3">${value.Monthlytotal}</td>
                           <td className="p-3">${value.Principalbalance}</td>
                        </tr>
                       }
