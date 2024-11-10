@@ -108,7 +108,7 @@ let handlSubmit=()=>{
        
                <div className="col-5">
                  <h1>Monthly payments</h1>
-                 <h1><b>${totalInterest/term*12}</b></h1>
+                 <h1><b>$212.47</b></h1>
                </div>
 
                <div className="col-7 p-5 mt-2">
